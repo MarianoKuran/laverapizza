@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>La Vera Pizza | El autentico sabor Napolitano</title>
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://kit.fontawesome.com/d821ae6b42.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2214%22 font-size=%2216%22>🍕</text></svg>">
+        <style>
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                font-family: 'Poppins', sans-serif;
+            }
+
+            @keyframes fire-pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.15); }
+                }
+
+                .fire-pulse {
+                animation: fire-pulse 0.9s infinite;
+            }
+            
+            @keyframes swing {
+                0%   { transform: scaleX(-1) rotate(0deg); }
+                25%  { transform: scaleX(-1) rotate(8deg); }
+                50%  { transform: scaleX(-1) rotate(-6deg); }
+                75%  { transform: scaleX(-1) rotate(4deg); }
+                100% { transform: scaleX(-1) rotate(0deg); }
+            }
+
+            .pizza-hang {
+                transform-origin: top center;
+                display: inline-block;
+                transform: scaleX(-1); /* mantener flip por defecto */
+            }
+
+            .pizza-hang:hover {
+                animation: swing 0.6s ease-in-out;
+            }
+
+            #mobileMenu.translate-y-full { transform: translateY(100%); }
+            #mobileMenu .opacity-0 { opacity: 0; }
+            #mobileMenu .opacity-100 { opacity: 1; }
+            #mobilePanel { transition: transform .28s cubic-bezier(.2,.9,.3,1), opacity .28s ease; transform: translateY(0); }
+        </style>
+    </head>
+
+    <body class="flex flex-col items-center bg-gradient-to-br from-gray-950 to-gray-950 via-red-950 via-60% bg-no-repeat bg-cover">
+        <header id="header" class="fixed flex justify-center w-full py-10 md:py-15 duration-300">
+            <div class="flex justify-between items-end w-[80%] text-white">
+                <!-- brand -->
+                <div class="flex items-end">
+                    <!-- icons -->
+                    <div class="relative w-fit mr-2">
+                        <i class="pizza-hang fa-solid fa-pizza-slice fa-flip-horizontal text-4xl text-red-600"></i>
+                        <i class="absolute fire-pulse animate-pulse fa-solid fa-fire text-[10px] top-0.5 left-8  text-orange-500"></i>
+                    </div>
+                    <h1 class="ps-2 text-2xl md:text-3xl font-bold">La Vera Pizza</h1>
+                </div>
+                <div class="md:w-[50%]">
+                    <!-- nav bar desktop -->
+                    <nav class="hidden md:flex text-gray-300/80 font-semibold uppercase">
+                        <ul class="w-full flex justify-between gap-5">
+                            <li><a href="#home" class="py-2 hover:text-gray-300" data-menu-link>Inicio</a></li>
+                            <li><a href="#about" class="py-2 hover:text-gray-300" data-menu-link>Nosotros</a></li>
+                            <li><a href="#menu" class="py-2 hover:text-gray-300" data-menu-link>Menú</a></li>
+                            <li><a href="#contact" class="py-2 hover:text-gray-300" data-menu-link>Contacto</a></li>
+                            <li><a href="#order" class="px-8 py-3 text-lg text-white font-bold rounded-full bg-gradient-to-tr from-red-500 from-30% to-yellow-600 shadow-md shadow-orange-800/60 hover:shadow-lg hover:shadow-orange-800/50 duration-300" data-menu-link>Ordenar ahora</a></li>
+                        </ul>
+                    </nav>
+
+
+                    <!-- Toggle menu mobile -->
+                    <button id="menuToggle" aria-controls="mobileMenu" aria-expanded="false" class="md:hidden z-50 inline-flex items-center justify-center rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-label="Abrir menú">
+                        <i id="hambIcon" class="fa-solid fa-bars text-3xl"></i>
+                        <i id="closeIcon" class="w-6 h-6 hidden" class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Fullscreen menu -->
+            <nav id="mobileMenu" class="fixed inset-0 z-40 transform translate-y-full md:hidden" aria-hidden="true" role="dialog" aria-modal="true">
+                <!-- backdrop -->
+                <div id="backdrop" class="absolute inset-0 bg-gradient-to-br from-gray-950 to-red-950  opacity-0 transition-opacity duration-300"></div>
+
+                <!-- panel -->
+                <div class="absolute inset-0 flex items-start justify-center text-gray-100">
+                    <div class="w-full h-full p-6 pt-20 overflow-auto transform transition-transform duration-300" id="mobilePanel">
+                        <button id="menuCloseInside" class="absolute top-4 right-4 p-2 rounded-md focus:outline-none ring-2 ring-white" aria-label="Cerrar menú">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+
+                        <ul class="flex flex-col gap-6 text-2xl">
+                            <li><a href="#home" class="block py-2" data-menu-link>Inicio</a></li>
+                            <li><a href="#about" class="block py-2" data-menu-link>Nosotros</a></li>
+                            <li><a href="#menu" class="block py-2" data-menu-link>Menú</a></li>
+                            <li><a href="#contact" class="block py-2" data-menu-link>Contacto</a></li>
+                            <li><a href="#order" class="inline-block px-4 py-2 text-white font-bold rounded-md bg-gradient-to-br from-red-500 from-30% to-orange-500" data-menu-link>Ordenar ahora</a></li>
+                        </ul>
+
+                        <div class="mt-10 flex flex-col text-2xl">
+                            <div>Nuestras redes</div>
+                            <div class="flex gap-6 mt-5">
+                                <button aria-label="Facebook">
+                                    <i class="fa-brands fa-square-facebook text-3xl"></i>
+                                </button>
+                                <button aria-label="Instagram">
+                                    <i class="fa-brands fa-instagram text-3xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- hero -->
+        <section id="home" class="h-[100vh] w-[80%] flex flex-col items-center pt-24 text-gray-100">
+            <div class="md:w-[80%] mt-16 mb-8 md:mb-14 text-[3.9rem] md:text-[7.5rem] leading-none text-center font-bold">La Pasión<br><span id="span-italiana" class="animate-pulse bg-gradient-to-tr from-red-500 from-30% to-yellow-500 text-transparent bg-clip-text">Italiana</span><br> en Cada Mordida</div>
+
+            <p class="md:w-[75%] text-center text-gray-300/90 md:text-[1.8rem]">Donde el fuego del horno de leña se encuentra con la <span class="bg-gradient-to-br from-red-500 from-30% to-orange-500 text-transparent bg-clip-text">maestría napolitana</span>. Ingredientes premium importados directamente desde Italia.</p>
+
+            <div class="w-full flex flex-col md:flex-row md:justify-center gap-4 mt-10 md:mt-16">
+                <button type="button" class="p-3 md:px-14 md:py-5 text-white text-xl md:text-2xl font-extrabold uppercase rounded-full bg-gradient-to-br from-red-500 from-30% to-orange-500 duration-300 shadow-lg shadow-orange-800/60 md:shadow-none hover:shadow-xl hover:shadow-orange-800/50">
+                    <i class="fa-solid fa-fire"></i>
+                    Explorar menu
+                </button>
+                <button type="button" class="p-3 md:px-14 md:py-5 text-gray-100/70 text-xl md:text-2xl font-extrabold uppercase rounded-full bg-gray-200/10 border-2 border-gray-200/30 hover:text-gray-100 hover:bg-gray-200/30 duration-300">Nuestra historia</button>
+            </div>
+        </section>
+
+        <!-- about -->
+        <section id="about" class="min-h-[100vh] w-full flex flex-col items-center justify-center pb-16 pt-10 text-gray-100 bg-black">
+            <h2 class="w-[80%] mt-16 mb-4 md:mb-6 text-[3.5rem] md:text-[4.5rem] leading-none text-center font-bold">El Arte de la <span class="bg-gradient-to-tr from-red-500 from-30% to-yellow-500 text-transparent bg-clip-text">Perfección</span></h2>
+            <p class="w-[75%] text-center text-gray-300/90 md:text-[1.2rem]">Tres generaciones transmitiendo la auténtica tradición napolitana</p>
+
+            <div class="flex flex-col md:flex-row md:justify-center items-center md:gap-24">
+                <div class="flex flex-col items-center w-[80%] md:max-w-[20%] mt-10 p-8 rounded-lg border-2 border-gray-200/10 bg-gradient-to-tl from-black to-gray-500/20">
+                    <div class="mb-5 py-5 px-8 rounded-lg bg-gradient-to-tr from-red-500 from-30% to-yellow-500">
+                        <i class="fa-solid fa-user-graduate text-4xl"></i>
+                    </div>
+                    <h4 class="w-full text-start text-2xl font-bold">Maestros Certificados</h4>
+                    <p class="text-gray-300/90 mt-4">Entrenados en Nápoles por la Associazione Verace Pizza Napoletana</p>
+                </div>
+                <div class="flex flex-col items-center w-[80%] md:max-w-[20%] mt-10 p-8 rounded-lg border-2 border-gray-200/10 bg-gradient-to-tl from-black to-gray-500/20">
+                    <div class="mb-5 py-5 px-8 rounded-lg bg-gradient-to-tr from-red-500 from-30% to-yellow-500">
+                        <i class="fa-solid fa-user-graduate text-4xl"></i>
+                    </div>
+                    <h4 class="w-full text-start text-2xl font-bold">Horno Tradicional</h4>
+                    <p class="text-gray-300/90 mt-4">Construido con materiales volcánicos del Vesubio, alcanzando 485°C</p>
+                </div>
+                <div class="flex flex-col items-center w-[80%] md:max-w-[20%] mt-10 p-8 rounded-lg border-2 border-gray-200/10 bg-gradient-to-tl from-black to-gray-500/20">
+                    <div class="mb-5 py-5 px-8 rounded-lg bg-gradient-to-tr from-red-500 from-30% to-yellow-500">
+                        <i class="fa-solid fa-user-graduate text-4xl"></i>
+                    </div>
+                    <h4 class="w-full text-start text-2xl font-bold">Premiados</h4>
+                    <p class="text-gray-300/90 mt-4">Mejor Pizzería Tradicional 2023 por la Guía Michelin</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- menu -->
+        <section id="menu" class="min-h-[100vh] w-full flex flex-col items-center justify-center pb-16 pt-10 text-gray-100 bg-black">
+            <h2 class="w-[80%] mt-16 mb-4 md:mb-6 text-[3.5rem] md:text-[4.5rem] leading-none text-center font-bold">Nuestro <span class="bg-gradient-to-tr from-red-500 from-30% to-yellow-500 text-transparent bg-clip-text">Menú</span></h2>
+            <p class="w-[75%] text-center text-gray-300/90 md:text-[1.2rem]">Masa madre fermentada 48 horas. Horneadas en 90 segundos a 485°C</p>
+
+            <div class="flex flex-col md:flex-row md:justify-center items-center md:gap-24">
+                <div class="flex flex-col items-center w-[80%] md:max-w-[20%] mt-10 rounded-lg border border-gray-200/10 hover:bg-gradient-to-br from-black to-orange-700/20">
+                    <div class="w-full mb-5">
+                        <img src="/assets/images/margarita.png" alt="Imagen de una pizza tipo margarita" class="rounded-t-lg">
+                    </div>
+                    <h4 class="px-4 w-full text-start text-2xl font-bold uppercase">Margarita</h4>
+                    <p class="px-4 text-gray-300/90 mt-2">Tomate San Marzano DOP, mozzarella di bufala Campana DOP, albahaca fresca</p>
+                    <div class="w-full flex justify-between items-center px-4 py-5 mt-5">
+                        <span class="text-2xl font-bold text-orange-500">$ 14.000</span>
+                        <button type="button" class="py-3 px-8 font-bold uppercase rounded-full bg-gradient-to-br from-red-500 from-30% to-orange-500 duration-300 shadow-lg shadow-orange-800/60 md:shadow-none hover:shadow-xl hover:shadow-orange-800/50">Ordenar</button>
+                    </div>
+                </div>
+                <div class="flex flex-col items-center w-[80%] md:max-w-[20%] mt-10 rounded-lg border border-gray-200/10 hover:bg-gradient-to-br from-black to-orange-700/20">
+                    <div class="w-full mb-5">
+                        <img src="/assets/images/bologna.png" alt="Imagen de una pizza tipo bolognesa" class="rounded-t-lg">
+                    </div>
+                    <h4 class="px-4 w-full text-start text-2xl font-bold uppercase">Bolognesa</h4>
+                    <p class="px-4 text-gray-300/90 mt-2">Tomate San Marzano DOP, mozzarella di bufala Campana DOP, albahaca fresca</p>
+                    <div class="w-full flex justify-between items-center px-4 py-5 mt-5">
+                        <span class="text-2xl font-bold text-orange-500">$ 14.000</span>
+                        <button type="button" class="py-3 px-8 font-bold uppercase rounded-full bg-gradient-to-br from-red-500 from-30% to-orange-500 duration-300 shadow-lg shadow-orange-800/60 md:shadow-none hover:shadow-xl hover:shadow-orange-800/50">Ordenar</button>
+                    </div>
+                </div>
+                <div class="flex flex-col items-center w-[80%] md:max-w-[20%] mt-10 rounded-lg border border-gray-200/10 hover:bg-gradient-to-br from-black to-orange-700/20">
+                    <div class="w-full mb-5">
+                        <img src="/assets/images/pepperonni.png" alt="Imagen de una pizza tipo pepperonni" class="rounded-t-lg">
+                    </div>
+                    <h4 class="px-4 w-full text-start text-2xl font-bold uppercase">Pepperonni</h4>
+                    <p class="px-4 text-gray-300/90 mt-2">Tomate San Marzano DOP, mozzarella di bufala Campana DOP, albahaca fresca</p>
+                    <div class="w-full flex justify-between items-center px-4 py-5 mt-5">
+                        <span class="text-2xl font-bold text-orange-500">$ 14.000</span>
+                        <button type="button" class="py-3 px-8 font-bold uppercase rounded-full bg-gradient-to-br from-red-500 from-30% to-orange-500 duration-300 shadow-lg shadow-orange-800/60 md:shadow-none hover:shadow-xl hover:shadow-orange-800/50">Ordenar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="w-[80%] flex flex-col justify-center py-14 text-gray-100">
+            <div class="w-full flex justify-center items-end">
+                <!-- icons -->
+                <div class="relative w-fit mr-2">
+                    <i class="pizza-hang fa-solid fa-pizza-slice fa-flip-horizontal text-4xl text-red-600"></i>
+                    <i class="absolute fire-pulse animate-pulse fa-solid fa-fire text-[10px] top-0.5 left-8  text-orange-500"></i>
+                </div>
+                <h1 class="ps-2 text-2xl md:text-3xl font-bold">La Vera Pizza</h1>
+            </div>
+            <div class="flex justify-center gap-6 mt-5">
+                <button aria-label="Facebook"><i class="fa-brands fa-square-facebook text-2xl"></i></button>
+                <button aria-label="Instagram"><i class="fa-brands fa-instagram text-2xl "></i></button>
+            </div>
+            <p class="mt-5 text-xs text-center">© 2025 La Vera Pizza. Tradición italiana desde 1985.</p>
+        </footer>
+
+        <script>
+            const header = document.getElementById('header');
+            const spanItaliana = document.getElementById('span-italiana');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    spanItaliana.classList.remove('animate-pulse');
+                    header.classList.add('bg-black');
+                } else {
+                    header.classList.remove('bg-black');
+                    spanItaliana.classList.add('animate-pulse');
+                }
+            });
+
+            (function () {
+                const toggle = document.getElementById('menuToggle');
+                const spanItaliana = document.getElementById('span-italiana');
+                const menu = document.getElementById('mobileMenu');
+                const panel = document.getElementById('mobilePanel');
+                const backdrop = document.getElementById('backdrop');
+                const closeInside = document.getElementById('menuCloseInside');
+                const hambIcon = document.getElementById('hambIcon');
+                const closeIcon = document.getElementById('closeIcon');
+                const focusableSelector = 'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])';
+                let lastFocused = null;
+
+                function openMenu() {
+                    lastFocused = document.activeElement;
+                    menu.classList.remove('translate-y-full');
+                    menu.setAttribute('aria-hidden', 'false');
+                    toggle.setAttribute('aria-expanded', 'true');
+                    hambIcon.classList.add('hidden');
+                    closeIcon.classList.remove('hidden');
+                    spanItaliana.classList.remove('animate-pulse');
+
+                    // animations
+                    backdrop.classList.remove('opacity-0');
+                    backdrop.classList.add('opacity-100');
+                    panel.classList.remove('translate-y-4');
+                    panel.classList.remove('opacity-0');
+
+                    // lock scroll
+                    document.documentElement.classList.add('overflow-hidden');
+
+                    // focus first focusable
+                    const first = menu.querySelector(focusableSelector);
+                    if (first) first.focus();
+
+                    // trap focus
+                    document.addEventListener('focus', trapFocus, true);
+                }
+
+                function closeMenu() {
+                    menu.classList.add('translate-y-full');
+                    menu.setAttribute('aria-hidden', 'true');
+                    toggle.setAttribute('aria-expanded', 'false');
+                    hambIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    spanItaliana.classList.add('animate-pulse');
+
+
+                    backdrop.classList.remove('opacity-100');
+                    backdrop.classList.add('opacity-0');
+
+                    document.documentElement.classList.remove('overflow-hidden');
+
+                    // restore focus
+                    if (lastFocused) lastFocused.focus();
+
+                    document.removeEventListener('focus', trapFocus, true);
+                }
+
+                function trapFocus(e) {
+                    if (!menu.contains(e.target)) {
+                        e.stopPropagation();
+                        // move focus into menu
+                        const focusable = menu.querySelectorAll(focusableSelector);
+                        if (focusable.length) focusable[0].focus();
+                    }
+                }
+
+                // toggle handlers
+                toggle.addEventListener('click', () => {
+                    if (menu.getAttribute('aria-hidden') === 'false') closeMenu();
+                    else openMenu();
+                });
+
+                closeInside.addEventListener('click', closeMenu);
+
+                // click backdrop to close
+                backdrop.addEventListener('click', closeMenu);
+
+                // close with ESC
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && menu.getAttribute('aria-hidden') === 'false') {
+                        closeMenu();
+                    }
+                });
+
+                // close when clicking a link
+                document.querySelectorAll('[data-menu-link]').forEach((el) => {
+                    el.addEventListener('click', closeMenu);
+                });
+
+                // Inicialmente escondido (a11y)
+                menu.setAttribute('aria-hidden', 'true');
+
+                // Opcional: adapta clases para animar entrada suave en CSS si lo deseas:
+                // Puedes añadir clases tailwind utility adicionales a `panel` para controlar transform/opacity.
+            })();
+        </script>
+    </body>
+</html>
