@@ -18,12 +18,12 @@ function simpleOrder(variedad, nombre = "Cliente") {
     if (isMobile) {
         // En mobile, primero intentamos abrir la app de WhatsApp
         try {
-        window.location.href = app; // deep link nativo
-        // fallback si la app no abre en 1s
-        setTimeout(() => window.open(wa_me, "_blank"), 1000);
+            window.open(app, "_blank"); // deep link nativo
+            // fallback si la app no abre en 1s
+            // setTimeout(() => window.open(wa_me, "_blank"), 1000);
         } catch (e) {
-        // fallback directo
-        window.open(wa_me, "_blank");
+            // fallback directo
+            window.open(wa_me, "_blank");
         }
     } else {
         // En desktop, abrimos WhatsApp Web
